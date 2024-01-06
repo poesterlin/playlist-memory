@@ -8,23 +8,20 @@ export const load: PageServerLoad = async ({ cookies }) => {
         return redirect(302, "/playlists");
     }
 
-    const clientId = env.CLIENT_ID;
     const verifier = generateCodeVerifier(128);
     cookies.set("verifier", verifier, { path: "/" });
 
-    const url = await redirectToAuthCodeFlow(clientId, verifier);
+    const url = await redirectToAuthCodeFlow(verifier);
     return redirect(302, url);
 };
 
-
-
-async function redirectToAuthCodeFlow(clientId: string, verifier: string) {
+async function redirectToAuthCodeFlow(verifier: string) {
     const challenge = await generateCodeChallenge(verifier);
 
     const params = new URLSearchParams();
-    params.append("client_id", clientId);
+    params.append("client_id", env.CLIENT_ID);
     params.append("response_type", "code");
-    params.append("redirect_uri", "http://localhost:5173/callback");
+    params.append("redirect_uri", env.REDIRECT_URI);
     params.append("scope", "user-read-private user-read-email");
     params.append("code_challenge_method", "S256");
     params.append("code_challenge", challenge);
