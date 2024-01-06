@@ -2,15 +2,13 @@
 import { env } from "$env/dynamic/private";
 import { error } from "@sveltejs/kit";
 
-const clientId = env.CLIENT_ID;
-
 export async function getAccessToken(code: string, verifier: string) {
     const params = new URLSearchParams();
-    params.append("client_id", clientId);
+    params.append("client_id", env.CLIENT_ID);
     params.append("grant_type", "authorization_code");
     params.append("code", code);
-    params.append("redirect_uri", "http://localhost:5173/callback");
-    params.append("code_verifier", verifier!);
+    params.append("redirect_uri", env.REDIRECT_URI);
+    params.append("code_verifier", verifier);
 
     const result = await fetch("https://accounts.spotify.com/api/token", {
         method: "POST",

@@ -10,18 +10,20 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
 
     const code = url.searchParams.get("code");
     if (!code) {
-        return redirect(302, "/");
+        console.error("No code found");
+        redirect(302, "/");
     }
 
     const verifier = cookies.get("verifier");
     if (!verifier) {
-        return redirect(302, "/");
+        console.error("No verifier found");
+        redirect(302, "/");
     }
 
     accessToken = await getAccessToken(code, verifier);
-
     if (!accessToken) {
-        return redirect(302, "/");
+        console.error("No access token found");
+        redirect(302, "/");
     }
 
     const expires = new Date();
