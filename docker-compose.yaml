@@ -6,6 +6,8 @@ services:
       context: ./pdf-generator
       dockerfile: Dockerfile
     restart: always
+    networks:
+      - traefik_web
 
   playlist:
     build:
