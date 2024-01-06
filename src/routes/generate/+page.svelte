@@ -1,28 +1,33 @@
 <script>
 	export let data;
+
+	let flipX = false;
+	let flipY = true;
 </script>
 
-<object
-	data="/generate/pdf?playlistId={data.playlistId}"
+<form>
+	<p>Printer flips double sided print?</p>
+	<label>
+		<input type="checkbox" bind:checked={flipX} />
+		Page is flipped the long way
+	</label>
+	<label>
+		<input type="checkbox" bind:checked={flipY} />
+		Page is flipped the short way
+	</label>
+</form>
+
+<iframe
+	src="/generate/pdf?playlistId={data.playlistId}&flipX={flipX}&flipY={flipY}"
 	title="pdf"
-	type="application/pdf"
+	frameborder="0"
 >
-	<iframe
-		src="/generate/pdf?playlistId={data.playlistId}"
-		title="pdf"
-		frameborder="0"
-	>
-		<p>This browser does not support PDF!</p>
-	</iframe>
-</object>
+	<p>This browser does not support PDF!</p>
+</iframe>
 
 <style>
-    object {
-        width: 100%;
-        height: 80dvh;
-    }
-    iframe {
-        width: 100%;
-        height: 100%;
-    }
+	iframe {
+		width: 100%;
+		height: 80dvh;
+	}
 </style>

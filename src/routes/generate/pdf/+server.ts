@@ -13,6 +13,9 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
         redirect(302, "/playlists");
     }
 
+    const flipX = url.searchParams.get("flipX") === "true";
+    const flipY = url.searchParams.get("flipY") === "true";
+
     const playlist = await fetchPlaylist(accessToken, playlistId);
     const tracks: Track[] = [];
 
@@ -22,12 +25,24 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
             title: track.name,
         } satisfies Track;
 
-        tracks.push(data, data, data, data);
-        tracks.push(data, data, data, data);
-        tracks.push(data, data, data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
+        tracks.push(data);
     }
 
-    const stream = await createPDF(tracks);
+    const stream = await createPDF(tracks, flipX, flipY);
     return new Response(stream, {
         headers: {
             "Content-Type": "application/pdf",

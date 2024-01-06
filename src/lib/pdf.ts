@@ -3,7 +3,7 @@ import { generateQR } from "./qr";
 
 export type Track = { url: string, title: string };
 
-export async function createPDF(tracks: Track[]) {
+export async function createPDF(tracks: Track[], flipSecondPageX = false, flipSecondPageY = false) {
     const doc = new PDFDocument({ bufferPages: true });
 
     let isWritable = true;
@@ -28,7 +28,6 @@ export async function createPDF(tracks: Track[]) {
         }
     });
 
-
     const padding = 10;
     const grid = 4;
     const height = doc.page.height - padding * 2;
@@ -41,7 +40,7 @@ export async function createPDF(tracks: Track[]) {
     let left = padding;
     let page = 1;
 
-    const setupPage = (i: number, skipPage = false, flipX = false) => {
+    const setupPage = (i: number, skipPage = false, flipX = false, flipY = false) => {
         // if we are not on the first item
         if (i !== 0) {
             // add a page if the max vertical cells are reached
@@ -54,12 +53,12 @@ export async function createPDF(tracks: Track[]) {
                     doc.addPage();
                 }
 
-                top = padding;
+                top = flipY ? height + padding - cellSize : padding;
                 left = flipX ? width + padding - cellSize : padding;
             } else
                 // move to the next row
                 if (i % grid === 0) {
-                    top += cellSize;
+                    top += flipY ? -cellSize : cellSize;
                     left = flipX ? width + padding - cellSize : padding;
                 }
                 // move to the next column
@@ -85,19 +84,19 @@ export async function createPDF(tracks: Track[]) {
 
     doc.addPage();
     doc.switchToPage(page);
-    top = padding;
-    left = width + padding - cellSize;
+    top = flipSecondPageY ? height + padding - cellSize : padding;
+    left = flipSecondPageX ? width + padding - cellSize : padding;
 
     for (let i = 0; i < tracks.length; i++) {
         // eslint-disable-next-line prefer-const
-        let [x, y] = setupPage(i, true, true);
+        let [x, y] = setupPage(i, true, flipSecondPageX, flipSecondPageY);
         const options = { width: imageSize, align: 'center' as const };
 
         // add offset to center the text vertically
         const track = tracks[i];
         y += 0.5 * (imageSize - doc.heightOfString(track.title, options));
 
-        doc.fontSize(10).text(track.title + left, x, y, options);
+        doc.fontSize(10).text(track.title, x, y, options);
         doc.rect(left, top, cellSize, cellSize).stroke("#aaa");
     }
 
