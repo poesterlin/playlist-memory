@@ -4,10 +4,10 @@ WORKDIR /app
 # pnpm fetch does require only lockfile
 COPY pnpm-lock.yaml ./
 
-RUN bun install -g pnpm && pnpm fetch
+RUN bunx pnpm fetch
 
 ADD . ./
-RUN pnpm install -r --offline && bun run --bun build
+RUN bunx pnpm install -r --offline && bun run --bun build
 
 EXPOSE 3000
 
