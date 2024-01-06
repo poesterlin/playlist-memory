@@ -1,12 +1,11 @@
-import { fetchProfile, getAccessToken } from "$lib/spotify";
+import { getAccessToken } from "$lib/spotify";
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "../$types";
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
     let accessToken = cookies.get("accessToken");
     if (accessToken) {
-        const profile = await fetchProfile(accessToken);
-        return { profile }
+        redirect(302, "/playlists");
     }
 
     const code = url.searchParams.get("code");
@@ -15,7 +14,6 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
     }
 
     const verifier = cookies.get("verifier");
-
     if (!verifier) {
         return redirect(302, "/");
     }
@@ -26,7 +24,8 @@ export const load: PageServerLoad = async ({ url, cookies }) => {
         return redirect(302, "/");
     }
 
-    cookies.set("accessToken", accessToken, { path: "/" });
-
+    const expires = new Date();
+    expires.setHours(expires.getHours() + 1);
+    cookies.set("accessToken", accessToken, { path: "/", expires });
     redirect(302, "/playlists");
 };

@@ -9,7 +9,10 @@ export const load: PageServerLoad = async ({ cookies }) => {
     }
 
     const verifier = generateCodeVerifier(128);
-    cookies.set("verifier", verifier, { path: "/" });
+
+    // Set the cookie to expire in 60 seconds
+    const expires = new Date(Date.now() + 120 * 1000);
+    cookies.set("verifier", verifier, { path: "/", expires });
 
     const url = await redirectToAuthCodeFlow(verifier);
     return redirect(302, url);
