@@ -80,8 +80,6 @@ export async function createPDF(tracks: Track[], flipSecondPageX = false, flipSe
         doc.rect(left, top, cellSize, cellSize).stroke("#aaa");
     }
 
-
-    console.log("done", page);
     for (let i = 0; i <= page; i++) {
         const text = `Page ${i + 1} of ${page + 1}`;
         const width = doc.widthOfString(text);
