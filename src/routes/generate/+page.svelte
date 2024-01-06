@@ -2,11 +2,11 @@
 	export let data;
 
 	let flipX = false;
-	let flipY = true;
+	let flipY = false;
 </script>
 
+<h2>Printer flips double sided print?</h2>
 <form>
-	<p>Printer flips double sided print?</p>
 	<label>
 		<input type="checkbox" bind:checked={flipX} />
 		Page is flipped the long way
@@ -26,6 +26,12 @@
 </iframe>
 
 <style>
+	form {
+		margin: 10px;
+		display: flex;
+		flex-direction: column;
+	}
+
 	iframe {
 		width: 100%;
 		height: 80dvh;

@@ -26,20 +26,6 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
         } satisfies Track;
 
         tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
-        tracks.push(data);
     }
 
     const stream = await createPDF(tracks, flipX, flipY);
