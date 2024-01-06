@@ -1,9 +1,15 @@
 version: '3.8'
 
 services:
+  pdf-generator:
+    build:
+      context: ./pdf-generator
+      dockerfile: Dockerfile
+    restart: always
+
   playlist:
     build:
-      context: ./
+      context: ./main
       dockerfile: Dockerfile
     restart: always
     networks:

@@ -1,6 +1,8 @@
-import { createPDF, type Track } from "$lib/pdf";
+import { env } from "$env/dynamic/private";
 import { fetchPlaylist } from "$lib/spotify";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
+
+type Track = { url: string, title: string };
 
 export const GET: RequestHandler = async ({ cookies, url }) => {
     const accessToken = cookies.get("accessToken");
@@ -36,3 +38,15 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
         },
     });
 };
+
+async function createPDF(tracks: Track[], flipX: boolean, flipY: boolean) {
+    const response = await fetch(env.PDF_BACKEND ?? "http://pdf-generator:3000", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ tracks, flipX, flipY }),
+    })
+
+    return response.body;
+}

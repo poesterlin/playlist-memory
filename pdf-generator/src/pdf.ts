@@ -1,32 +1,12 @@
 import PDFDocument from "pdfkit";
 import { generateQR } from "./qr";
+import blobStream from "blob-stream";
 
 export type Track = { url: string, title: string };
 
 export async function createPDF(tracks: Track[], flipSecondPageX = false, flipSecondPageY = false) {
     const doc = new PDFDocument({ bufferPages: true });
-
-    let isWritable = true;
-    const readable = new ReadableStream({
-        start(controller) {
-            doc.on("data", (chunk) => {
-                if (!isWritable) {
-                    return;
-                }
-
-                try {
-                    controller.enqueue(chunk);
-                } catch (error) {
-                    isWritable = false;
-                    controller.error(error);
-                }
-            });
-            doc.on("end", () => {
-                isWritable = false;
-                controller.close()
-            });
-        }
-    });
+    const stream = doc.pipe(blobStream());
 
     const padding = 10;
     const grid = 4;
@@ -101,5 +81,10 @@ export async function createPDF(tracks: Track[], flipSecondPageX = false, flipSe
     }
 
     doc.end();
-    return readable;
+    return new Promise<Blob>((resolve) => {
+        stream.on('finish', function () {
+            const blob = stream.toBlob('application/pdf');
+            resolve(blob);
+        });
+    });
 }
