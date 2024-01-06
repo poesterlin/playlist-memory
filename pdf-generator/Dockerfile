@@ -11,4 +11,4 @@ RUN pnpm install -r --offline && pnpm run build
 
 EXPOSE 3000
 
-CMD ["node", "build/index.js"]
+CMD ["node", "dist/index.js"]

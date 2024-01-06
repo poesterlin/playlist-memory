@@ -6,12 +6,7 @@ const app = new Hono()
 
 app.post('/', async (c) => {
   const body = await c.req.json();
-
-
-
   const { tracks, flipX, flipY } = body;
-
-
   const blob = await createPDF(tracks, flipX, flipY);
   return new Response(blob, { headers: { 'Content-Type': 'application/pdf' } });
 })

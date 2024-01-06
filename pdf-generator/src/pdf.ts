@@ -80,6 +80,19 @@ export async function createPDF(tracks: Track[], flipSecondPageX = false, flipSe
         doc.rect(left, top, cellSize, cellSize).stroke("#aaa");
     }
 
+
+    console.log("done", page);
+    for (let i = 0; i <= page; i++) {
+        const text = `Page ${i + 1} of ${page + 1}`;
+        const width = doc.widthOfString(text);
+        const height = doc.heightOfString(text);
+        const x = doc.page.width - width - padding / 2;
+        const y = doc.page.height - height - padding / 2;
+
+        doc.switchToPage(i);
+        doc.fontSize(10).text(text, x, y);
+    }
+
     doc.end();
     return new Promise<Blob>((resolve) => {
         stream.on('finish', function () {

@@ -25,6 +25,9 @@ devDependencies:
   '@types/blob-stream':
     specifier: ^0.1.33
     version: 0.1.33
+  '@types/node':
+    specifier: ^20.10.6
+    version: 20.10.6
   '@types/pdfkit':
     specifier: ^0.13.3
     version: 0.13.3

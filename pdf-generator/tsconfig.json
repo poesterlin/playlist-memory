@@ -1,10 +1,11 @@
 {
   "compilerOptions": {
-    "strict": true,
-    "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx",
-    "outDir": "./build",
+    "target": "ES2020",
+    "moduleResolution": "NodeNext",
+    "outDir": "./dist",
     "esModuleInterop": true,
+    "types": ["node"],
+    "skipLibCheck": true
   },
   "include": ["./src/**/*"]
 }
