@@ -40,7 +40,7 @@ export const GET: RequestHandler = async ({ cookies, url }) => {
 };
 
 async function createPDF(tracks: Track[], flipX: boolean, flipY: boolean) {
-    const response = await fetch(env.PDF_BACKEND ?? "http://pdf-generator:3000", {
+    const response = await fetch(env.PDF_BACKEND, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
