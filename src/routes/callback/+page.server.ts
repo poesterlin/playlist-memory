@@ -1,6 +1,6 @@
 import { getAccessToken } from "$lib/spotify";
 import { redirect } from "@sveltejs/kit";
-import type { PageServerLoad } from "../$types";
+import type { PageServerLoad } from "./$types";
 
 export const load: PageServerLoad = async ({ url, cookies }) => {
     let accessToken = cookies.get("accessToken");

@@ -2,13 +2,15 @@
 	export let data;
 </script>
 
-<h2>{data.playlist.name}</h2>
-<a href="/generate?playlistId={data.playlist.id}" id="generate">
-	<img src="/download.svg" alt="download icon" />
-	Generate Printable PDF
-</a>
+<div id="controls">
+	<a href="/generate?playlistId={data.playlist.id}" id="generate">
+		<img src="/download.svg" alt="download icon" />
+		<span>Generate Printable PDF</span>
+	</a>
+</div>
 
 <div id="tracks">
+	<h2>{data.playlist.name}</h2>
 	<h3>Tracks</h3>
 	{#each data.playlist.tracks.items as item}
 		{@const track = item.track}
@@ -26,11 +28,17 @@
 </div>
 
 <style>
+	#controls {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 1rem;
+	}
 	#tracks {
 		display: flex;
 		flex-direction: column;
 		gap: 1rem;
-		margin: 0 30%;
+		margin: 10dvh min(5%, 200px);
 	}
 	h2 {
 		text-align: center;
@@ -60,18 +68,29 @@
 		flex-direction: row;
 		align-items: center;
 		justify-content: center;
-		gap: 5%;
-		padding: 0.5rem 1rem;
-		background-color: #1db95492;
+		padding: 1rem 2rem;
+		box-shadow: 0 0 15px #00000055;
 		cursor: pointer;
 		color: #fff;
-		margin-bottom: 2rem;
 		font-size: 1.5rem;
 		font-weight: bold;
-		width: 40%;
+		width: min(500px, 80vw);
 		margin: 1rem auto;
+		background-image: linear-gradient(to right, rgb(45, 163, 63), rgb(27, 81, 35) 90%);
+		border-radius: 4px;
+		transition: background-color 0.5s ease-in-out;
+		box-sizing: border-box;
 	}
 
+	#generate:active {
+		transform: scale(0.95);
+	}
+
+	span {
+		flex: 1 1 100%;
+		display: block;
+		text-align: center;
+	}
 	#generate:hover {
 		background-color: #1db954;
 	}

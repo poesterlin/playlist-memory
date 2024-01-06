@@ -11,15 +11,6 @@
 </div>
 
 <style>
-	:global(body) {
-		background-color: rgb(46, 103, 54);
-		background-image: linear-gradient(rgb(43, 110, 53), rgb(4, 11, 5) 85%);
-		background-attachment: fixed;
-		background-size: cover;
-		background-position: center;
-		background-repeat: no-repeat;
-	}
-
 	h1 {
 		font-size: 2em;
 		margin-bottom: 12px;

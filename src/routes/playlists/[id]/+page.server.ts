@@ -1,10 +1,11 @@
 import { error } from "console";
-import type { PageServerLoad } from "../$types";
+import type { PageServerLoad } from "./$types";
 import { fetchPlaylist } from "$lib/spotify";
 import { redirect } from "@sveltejs/kit";
 
 export const load: PageServerLoad = async ({ params, cookies }) => {
-    if (!params.id) {
+    const id = params.id;
+    if (!id) {
         error(400, "Invalid playlist id");
     }
 
@@ -13,6 +14,6 @@ export const load: PageServerLoad = async ({ params, cookies }) => {
         redirect(302, "/");
     }
 
-    const playlist = await fetchPlaylist(accessToken, params.id);
+    const playlist = await fetchPlaylist(accessToken, id);
     return { playlist };
 };
