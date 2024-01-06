@@ -1,14 +1,14 @@
-FROM oven/bun:latest
+FROM node:20-slim
 WORKDIR /app
 
 # pnpm fetch does require only lockfile
 COPY pnpm-lock.yaml ./
 
-RUN bunx pnpm fetch
+RUN npm i -g pnpm && pnpm fetch
 
 ADD . ./
-RUN bunx pnpm install -r --offline && bun run --bun build
+RUN pnpm install -r --offline && pnpm run build
 
 EXPOSE 3000
 
-CMD ["bun", "build/index.js"]
+CMD ["node", "build/index.js"]
