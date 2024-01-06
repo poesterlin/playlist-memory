@@ -9,6 +9,8 @@
 		<a href="/playlists/{playlist.id}" style:background-image={`url(${playlist.images?.at(0)?.url ?? "/playlist.png"})`}>
 			<h3>{playlist.name} ({playlist.tracks.total})</h3>
 		</a>
+	{:else}
+		<p>No playlists found 🤕</p>
 	{/each}
 </div>
 

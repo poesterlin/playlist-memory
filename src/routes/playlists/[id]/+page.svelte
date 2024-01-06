@@ -20,6 +20,8 @@
 				<h4>{track.name}</h4>
 			</div>
 		</a>
+	{:else}
+		<p>Playlist has no tracks 🤕</p>
 	{/each}
 </div>
 
