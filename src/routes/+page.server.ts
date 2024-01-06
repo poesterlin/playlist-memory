@@ -1,9 +1,14 @@
 import { redirect } from "@sveltejs/kit";
 import type { PageServerLoad } from "./$types";
 
-export const load: PageServerLoad = async ({ cookies }) => {
+export const load: PageServerLoad = async ({ cookies, url }) => {
     if (cookies.get("accessToken")) {
-        return redirect(302, "/playlists");
+        redirect(302, "/playlists");
+    }
+
+    const code = url.searchParams.get("code");
+    if (code) {
+        redirect(302, "/callback?code=" + code);
     }
 
     return {
