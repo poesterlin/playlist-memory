@@ -6,7 +6,7 @@ import type { PageServerLoad } from "./$types";
 export const load: PageServerLoad = async ({ cookies, url }) => {
     const accessToken = cookies.get("accessToken");
     if (!accessToken) {
-        return redirect(302, "/");
+        return { playlists: [], offset: 0, hasMore: false };
     }
 
     let offset = 0;

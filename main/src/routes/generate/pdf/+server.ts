@@ -1,13 +1,13 @@
 import { env } from "$env/dynamic/private";
-import { fetchPlaylist } from "$lib/spotify";
+import { authorize, fetchPlaylist } from "$lib/spotify";
 import { redirect, type RequestHandler } from "@sveltejs/kit";
 
 type Track = { url: string, title: string };
 
 export const GET: RequestHandler = async ({ cookies, url }) => {
-    const accessToken = cookies.get("accessToken");
+    let accessToken = cookies.get("accessToken");
     if (!accessToken) {
-        redirect(302, "/");
+        accessToken = await authorize();
     }
 
     const playlistId = url.searchParams.get("playlistId");

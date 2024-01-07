@@ -151,3 +151,21 @@ export async function getTrackById(token: string, id: string) {
     return json as Track["track"];
 }
 
+
+export async function authorize() {
+    const params = new URLSearchParams();
+    params.append('grant_type', 'client_credentials');
+
+    const reponse = await fetch('https://accounts.spotify.com/api/token', {
+        headers: {
+            'Authorization': 'Basic ' + (Buffer.from(env.CLIENT_ID + ':' + env.CLIENT_SECRET).toString('base64')),
+            "Content-Type": "application/x-www-form-urlencoded",
+            "Accept": "application/json"
+        },
+        method: 'POST',
+        body: params,
+    });
+
+    const json = await reponse.json();
+    return json.access_token as string;
+}

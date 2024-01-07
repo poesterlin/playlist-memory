@@ -1,12 +1,17 @@
+<script>
+	import Search from '$lib/search.svelte';
+</script>
 
-<div id="content">
-	<div id="login-container">
-		<div class="login">
-			<h1>Login</h1>
-			<a href="/authorize" id="login-button" class="big-btn">Log in with Spotify</a>
-			<p class="login-desc">Please login to get access to spotify content.</p>
-			<p class="login-desc-small">You will automatically be redirected to this page after login.</p>
-		</div>
+<div id="login-container">
+	<Search />
+
+	<p>OR</p>
+
+	<div class="login">
+		<h1>Login</h1>
+		<a href="/authorize" id="login-button" class="big-btn">Log in with Spotify</a>
+		<p class="login-desc">Please login to get access to spotify content.</p>
+		<p class="login-desc-small">You will automatically be redirected to this page after login.</p>
 	</div>
 </div>
 
@@ -17,30 +22,13 @@
 		margin-top: 0;
 	}
 
-	#content {
-		display: -ms-flexbox;
-		display: flex;
-		-ms-flex-direction: column;
-		flex-direction: column;
-		position: absolute;
-		top: 0;
-		bottom: 0;
-		right: 0;
-		left: 0;
-		overflow: hidden;
-	}
-
 	#login-container {
-		display: -ms-flexbox;
-		display: flex;
 		height: 100%;
-		-ms-flex-direction: column;
 		flex-direction: column;
-		-ms-flex-align: center;
 		align-items: center;
 		margin: 0 auto;
-		-ms-flex-pack: center;
 		justify-content: center;
+		width: min(100%, 600px);
 	}
 
 	#login-container .login {
@@ -70,15 +58,21 @@
 		transition-duration: 0.3s;
 		border-width: 0;
 		letter-spacing: 2px;
-		min-width: 160px;
 		text-transform: uppercase;
 		white-space: normal;
 		cursor: pointer;
-        display: block;
+		display: block;
 	}
 
 	.big-btn:hover {
 		background-color: #6207e3;
 	}
 
+	p {
+		color: #ffffff;
+		font-size: 20px;
+		font-weight: bold;
+		margin: 20px 0;
+		text-align: center;
+	}
 </style>
